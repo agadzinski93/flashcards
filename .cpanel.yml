@@ -8,5 +8,5 @@ deployment:
     - /bin/cp package.json $DEPLOYPATH
     - /bin/rm -rf "${DEPLOYPATH}client/dist" || true
     - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install
-    - source /home/ovtainxn/nodevenv/flashcards.programminghelp.org/16/bin/activate && cd /home/ovtainxn/flashcards.programminghelp.org
-    - ~/nodevenv/flashcards.programminghelp.org/16/lib/bin/vite build client
+    - source /home/ovtainxn/nodevenv/flashcards.programminghelp.org/16/bin/activate && cd /home/ovtainxn/flashcards.programminghelp.org/client
+    - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install
