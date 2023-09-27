@@ -6,4 +6,3 @@ deployment:
     - /bin/cp -R server $DEPLOYPATH
     - /bin/cp package-lock.json $DEPLOYPATH
     - /bin/cp package.json $DEPLOYPATH
-    - /bin/rm -r "${DEPLOYPATH}client/dist" >/dev/null 2>&1
