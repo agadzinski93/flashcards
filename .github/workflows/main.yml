@@ -22,13 +22,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      - name: sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy to cPanel
+        id: deploy
+        uses: pinkasey/cpanel-deploy-action@v1.0.0
         with:
-          server: ftp.programminghelp.org
-          username: ${{ secrets.username }}
-          password: ${{ secrets.password }}
-          server-dir: /repositories/flashcards/
+          hostname: "https://rssd9243.webaccountserver.com"
+          repository_root: "/home/ovtainxn/repositories/flashcards"
+          branch: main
+          cpanel_token: "${{ secrets.CPANEL_TOKEN }}"
