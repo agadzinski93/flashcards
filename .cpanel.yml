@@ -6,7 +6,7 @@ deployment:
     - /bin/cp -R server $DEPLOYPATH
     - /bin/cp package-lock.json $DEPLOYPATH
     - /bin/cp package.json $DEPLOYPATH
-    - /bin/rm -r client/dist $DEPLOYPATH >/dev/null 2>&1
+    - /bin/rm -r "${DEPLOYPATH}client/dist" >/dev/null 2>&1
     - source /home/ovtainxn/nodevenv/flashcards.programminghelp.org/16/bin/activate && cd /home/ovtainxn/flashcards.programminghelp.org
     - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install
     - ~/nodevenv/flashcards.programminghelp.org/16/lib/bin/vite build client
