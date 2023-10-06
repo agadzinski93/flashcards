@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite build client",
     "client": "npm run dev --prefix client",
-    "postinstall": "cd client && npm install",
+    "postinstall": "cd /home/ovtainxn/flashcards.programminghelp.org/client && npm install",
     "server": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run server\" \"npm run client\""
