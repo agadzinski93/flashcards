@@ -2,7 +2,6 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/ovtainxn/flashcards.programminghelp.org/
-    - /usr/bin/pkill -9 lsnode >/dev/null 2>&1
     - /bin/cp -R client $DEPLOYPATH
     - /bin/cp -R server $DEPLOYPATH
     - /bin/cp package-lock.json $DEPLOYPATH
