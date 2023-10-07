@@ -18,5 +18,5 @@ deployment:
     - /usr/bin/mv ${DEPLOYPATH}package-old.json "${DEPLOYPATH}package.json"
     - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install
     - source /home/ovtainxn/nodevenv/flashcards.programminghelp.org/16/bin/activate && cd /home/ovtainxn/flashcards.programminghelp.org
-    - ~/nodevenv/flashcards.programminghelp.org/16/lib/bin/vite build client
+    - vite build client
 #    - /bin/rm -rf "${ENVPATH}lib/lib/node_modules"/* || true
