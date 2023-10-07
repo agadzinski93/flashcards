@@ -7,6 +7,13 @@ deployment:
     - /bin/cp package-lock.json $DEPLOYPATH
     - /bin/cp package.json $DEPLOYPATH
     - /bin/rm -rf "${DEPLOYPATH}client/dist" || true
+    - /usr/bin/mv /home/ovtainxn/flashcards.programminghelp.org/package.json /home/ovtainxn/flashcards.programminghelp.org/package-old.json
+    - /usr/bin/cp /home/ovtainxn/flashcards.programminghelp.org/client/package.json /home/ovtainxn/flashcards.programminghelp.org
+    - /bin/rm ~/nodevenv/flashcards.programminghelp.org/16/lib/lib/node_modules/*
+    - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install --include=dev
+    - /usr/bin/mv ~/nodevenv/flashcards.programminghelp.org/16/lib/node_modules/* ~/nodevenv/flashcards.programminghelp.org/16/lib/lib/node_modules 2>/dev/null
+    - /bin/rm /home/ovtainxn/flashcards.programminghelp.org/package.json
+    - /usr/bin/mv /home/ovtainxn/flashcards.programminghelp.org/package-old.json /home/ovtainxn/flashcards.programminghelp.org/package.json
+    - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install
     - source /home/ovtainxn/nodevenv/flashcards.programminghelp.org/16/bin/activate && cd /home/ovtainxn/flashcards.programminghelp.org
-    - npm install
-    - cd client && npm install
+    - ~/nodevenv/flashcards.programminghelp.org/16/lib/bin/vite build client
