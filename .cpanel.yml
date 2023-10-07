@@ -15,7 +15,7 @@ deployment:
     - /usr/bin/mv "${ENVPATH}lib/node_modules"/* "${ENVPATH}lib/lib/node_modules" 2>/dev/null
     - /usr/bin/ln -s "${ENVPATH}lib/lib/node_modules" "$DEPLOYPATH/client" 2>/dev/null
     - /bin/rm "${DEPLOYPATH}package.json"
-    - /usr/bin/mv /home/ovtainxn/flashcards.programminghelp.org/package-old.json "${DEPLOYPATH}package.json"
+    - /usr/bin/mv ${DEPLOYPATH}package-old.json "${DEPLOYPATH}package.json"
     - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install
     - source /home/ovtainxn/nodevenv/flashcards.programminghelp.org/16/bin/activate && cd /home/ovtainxn/flashcards.programminghelp.org
     - ~/nodevenv/flashcards.programminghelp.org/16/lib/bin/vite build client
