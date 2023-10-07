@@ -1,22 +1,4 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/ovtainxn/flashcards.programminghelp.org/
-    - export ENVPATH=~/nodevenv/flashcards.programminghelp.org/16/
-    - /bin/cp -R client $DEPLOYPATH
-    - /bin/cp -R server $DEPLOYPATH
-    - /bin/cp package-lock.json $DEPLOYPATH
-    - /bin/cp package.json $DEPLOYPATH
-    - /bin/rm -rf "${DEPLOYPATH}client/dist" || true
-    - /usr/bin/mv "${DEPLOYPATH}package.json" ${DEPLOYPATH}package-old.json
-    - /usr/bin/cp "${DEPLOYPATH}client/package.json" $DEPLOYPATH
-    - /bin/rm -rf "${ENVPATH}lib/lib/node_modules"/* || true
-    - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install --include=dev
-    - /usr/bin/mv "${ENVPATH}lib/node_modules"/* "${ENVPATH}lib/lib/node_modules" 2>/dev/null
-    - /usr/bin/ln -s "${ENVPATH}lib/lib/node_modules" "$DEPLOYPATH/client" 2>/dev/null
-    - /bin/rm "${DEPLOYPATH}package.json"
-    - /usr/bin/mv ${DEPLOYPATH}package-old.json "${DEPLOYPATH}package.json"
-    - ~/nodevenv/flashcards.programminghelp.org/16/bin/npm install
-    - source /home/ovtainxn/nodevenv/flashcards.programminghelp.org/16/bin/activate && cd /home/ovtainxn/flashcards.programminghelp.org
-    - vite build client
-#    - /bin/rm -rf "${ENVPATH}lib/lib/node_modules"/* || true
+    - ~/bin/deployFlashcards.sh
