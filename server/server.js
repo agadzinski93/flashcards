@@ -18,7 +18,7 @@ app.get("/api",(req,res)=>res.json({result:"Hello"}));
 app.get("/api/test",async (req,res)=>{
     let result = await db.query(`SELECT count(username) FROM users;`);
     console.log(result);
-    res.send("Test");
+    res.send("Testing");
 })
 
 if (process.env.NODE_ENV === 'production'){
