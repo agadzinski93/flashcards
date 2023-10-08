@@ -4,7 +4,7 @@
   "description": "Allows users to create decks of flashcards for studying",
   "main": "server.js",
   "scripts": {
-    "build": "vite --max_old_space_size=1024 build client",
+    "build": "vite build client",
     "client": "npm run dev --prefix client",
     "server": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
