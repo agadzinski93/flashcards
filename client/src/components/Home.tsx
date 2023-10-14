@@ -1,6 +1,10 @@
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <h1>Home</h1>
+      <p>This is a test. This is another test. And so on.</p>
+    </>
+    
   )
 }
 
