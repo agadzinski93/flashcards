@@ -1,5 +1,5 @@
-const mysql = require("mysql2");
-const bluebird = require('bluebird');
+import mysql from 'mysql2'
+import bluebird from 'bluebird'
 let DB;
 class MySQLDatabaseConnection {
     #pool;
@@ -49,4 +49,4 @@ const connectDB = () => {
     return DB;
 }
 
-module.exports = connectDB;
+export default connectDB;

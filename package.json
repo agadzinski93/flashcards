@@ -2,6 +2,7 @@
   "name": "flashcards",
   "version": "1.0.0",
   "description": "Allows users to create decks of flashcards for studying",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "build": "vite build client",
@@ -13,6 +14,7 @@
   "author": "Adam Huntley",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "bluebird": "^3.7.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",

@@ -1,21 +1,25 @@
-import Header from './components/Header'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from './components/Home.tsx'
-import Login from './components/auth/Login.tsx'
-import Register from './components/auth/Register.tsx'
+import {NavLink,Outlet} from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function App() {
+  const {token} = useSelector(state => state.auth);
 
   return (
     <>
-      <BrowserRouter basename="/">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
-        </Routes>
-      </BrowserRouter>
+      <header>
+        <nav>
+            <ul>
+                <ol><NavLink to="/">Home</NavLink></ol>
+                {!token && <ol><NavLink to="/auth/login">Login</NavLink></ol>}
+                {!token && <ol><NavLink to="/auth/register">Register</NavLink></ol>}
+                {token && <ol><NavLink to="/auth/logout">Logout</NavLink></ol>}
+                {token && <ol><NavLink to="/dashboard">Dashboard</NavLink></ol>}
+            </ul>
+        </nav>
+      </header>
+      <main>
+      <Outlet />
+      </main>
     </>
   )
 }

@@ -5,6 +5,7 @@ CREATE TABLE users(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     username CHAR(24) UNIQUE NOT NULL,
     email CHAR(45) UNIQUE NOT NULL,
+    password VARCHAR(90) NOT NULL,
     accountStatus ENUM('active','pending','disabled','banned') NOT NULL DEFAULT 'pending',
     profilePic VARCHAR(145) NOT NULL DEFAULT "https://res.cloudinary.com/dlv7hwwa7/image/upload/v1677570982/Programminghelp/profile-pic-default_ggecfy.jpg",
     numOfDecks INT NOT NULL DEFAULT 0,
@@ -48,14 +49,14 @@ CREATE TABLE cards(
 
 DROP PROCEDURE IF EXISTS registerUser;
 DELIMITER //
-CREATE PROCEDURE registerUser(IN u CHAR(24),IN e CHAR(45))
+CREATE PROCEDURE registerUser(IN u CHAR(24),IN e CHAR(45),IN p CHAR(90))
 BEGIN
 	DECLARE sql_error TINYINT DEFAULT FALSE;
     BEGIN
 		DECLARE EXIT HANDLER FOR SQLEXCEPTION
 			SET sql_error = TRUE;
         START TRANSACTION;
-		INSERT INTO users(username,email) VALUES(u,e);
+		INSERT INTO users(username,email,password) VALUES(u,e,p);
     END;
     IF sql_error = TRUE THEN
 		ROLLBACK;
@@ -105,33 +106,43 @@ BEGIN
 END//
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS usernameOrEmailExists;
+DELIMITER //
+CREATE PROCEDURE usernameOrEmailExists(IN input_username CHAR(24),IN input_email CHAR(45))
+BEGIN
+	DECLARE exist TINYINT DEFAULT FALSE;
+	IF (SELECT count(username) FROM users WHERE username = input_username OR email = input_email) > 0 THEN
+		SET exist = TRUE;
+    END IF;
+    SELECT exist AS output;
+END//
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS createDeck;
 DELIMITER //
 CREATE PROCEDURE createDeck(IN deckName CHAR(24),IN deckOwner INT, IN deckAuthor INT, IN deckDifficulty ENUM('','beginner','intermediate','advanced'), IN prereq INT)
 BEGIN
-	BEGIN
-		DECLARE sql_error TINYINT DEFAULT FALSE;
-		BEGIN
-			DECLARE EXIT HANDLER FOR SQLEXCEPTION
-				SET sql_error = TRUE;
-				
-			START TRANSACTION;
-            IF deckDifficulty = '' THEN
-				SET deckDifficulty = 'beginner';
-            END IF;
-            IF prereq = '' THEN
-				INSERT INTO decks(name,userId,authorId,difficulty,prerequisite) VALUES(deckName,deckOwner,deckAuthor,deckDifficulty);
-			ELSE
-				INSERT INTO decks(name,userId,authorId,difficulty,prerequisite) VALUES(deckName,deckOwner,deckAuthor,deckDifficulty,prereq);
-            END IF;
-		END;
-		IF sql_error = TRUE THEN
-			ROLLBACK;
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Error Creating Deck";
-		ELSE
-			COMMIT;
-		END IF;
-	END;
+    DECLARE sql_error TINYINT DEFAULT FALSE;
+    BEGIN
+        DECLARE EXIT HANDLER FOR SQLEXCEPTION
+            SET sql_error = TRUE;
+            
+        START TRANSACTION;
+        IF deckDifficulty = '' THEN
+            SET deckDifficulty = 'beginner';
+        END IF;
+        IF prereq = '' THEN
+            INSERT INTO decks(name,userId,authorId,difficulty,prerequisite) VALUES(deckName,deckOwner,deckAuthor,deckDifficulty);
+        ELSE
+            INSERT INTO decks(name,userId,authorId,difficulty,prerequisite) VALUES(deckName,deckOwner,deckAuthor,deckDifficulty,prereq);
+        END IF;
+    END;
+    IF sql_error = TRUE THEN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = "Error Creating Deck";
+    ELSE
+        COMMIT;
+    END IF;
 END//
 DELIMITER ;
 

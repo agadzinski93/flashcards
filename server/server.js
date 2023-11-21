@@ -1,18 +1,22 @@
-const express = require('express');
-let dotenv = require('dotenv');
+import express from 'express'
+import dotenv from 'dotenv'
 dotenv.config();
-const path = require('path');
+import path from 'path'
 const PORT = process.env.PORT || 5000;
-const cookieParser = require('cookie-parser');
-const connectDB = require('./utilities/db/configure');
+import cookieParser from 'cookie-parser'
+const COOKIE_SECRET = process.env.COOKIE_SECRET || 'secret'
+import connectDB from './utilities/db/configure.js';
+import authRoutes from './routes/authRoutes.js'
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(cookieParser());
+app.use(cookieParser(COOKIE_SECRET));
 
 let db = connectDB();
+
+app.use("/api/auth", authRoutes)
 
 app.get("/api",(req,res)=>res.json({result:"Hello"}));
 app.get("/api/test",async (req,res)=>{
