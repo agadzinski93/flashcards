@@ -1,5 +1,5 @@
-import AppError from '../validators/AppError.js';
-import connectDB from '../db/configure.js';
+import AppError from '../validators/AppError.mjs';
+import connectDB from '../db/configure.mjs';
 
 const getUser = async (username) => {
     let output = null;

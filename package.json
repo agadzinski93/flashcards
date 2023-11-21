@@ -2,7 +2,7 @@
   "name": "flashcards",
   "version": "1.0.0",
   "description": "Allows users to create decks of flashcards for studying",
-  "type": "module",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
     "build": "vite build client",

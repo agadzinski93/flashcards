@@ -1,8 +1,8 @@
 import {
     getUser,
     usernameOrEmailExists,
-    addUser} from '../utilities/helpers/userHelpers.js'
-import AppError from "../utilities/validators/AppError.js";
+    addUser} from '../utilities/helpers/userHelpers.mjs'
+import AppError from "../utilities/validators/AppError.mjs";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 const SALT_ROUNDS = 10;
