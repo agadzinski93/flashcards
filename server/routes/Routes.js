@@ -5,7 +5,7 @@ const Routes =  {
             const {default:authRoutes} = await import('../routes/authRoutes.mjs');
             return {connectDB,authRoutes};
         } catch(err) {
-            console.error(`${new Date().toString()} - Import Routes Failed: ${err.message}`);
+            console.error(`${new Date().toString()} -> Import Routes Failed: ${err.message}`);
         }
         return null;
     }

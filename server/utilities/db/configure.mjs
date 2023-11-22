@@ -37,7 +37,7 @@ class MySQLDatabaseConnection {
             result = await promisePool.query(q);
         } catch(err) {
             result = {"error":`Query Failed: ${err.message}`};
-            console.error(`${new Date().toString()} - DB: ${err.message}`);
+            console.error(`${new Date().toString()} -> DB: ${err.message}`);
         }
         return result;
     }
