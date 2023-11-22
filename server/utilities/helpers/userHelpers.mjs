@@ -24,7 +24,6 @@ const addUser = async (username,email,password) => {
     let output;
     try {
         const db = connectDB();
-        console.error(`Test B`);
         const result = await db.query(`CALL registerUser('${username}','${email}','${password}')`);
         if (result?.error) {
             console.error(`${new Date().toString()} - AddUser Procedure Failure: ${result.error}`);
