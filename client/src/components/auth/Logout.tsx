@@ -3,22 +3,31 @@ import { useDispatch } from "react-redux"
 import { logout } from "../../redux/slices/authSlice"
 import { Navigate } from "react-router-dom"
 
+type responseData = {
+  response : string,
+  message: string
+}
+
 const Logout = () => {
   const dispatch = useDispatch();
+
+  const logoutUser = async () => {
+      const result = await fetch('/api/auth/logout',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        }
+      });
+      const data = await result.json();
+      return data;
+  }
   useEffect(()=>{
-    const logoutUser = async () => {
-        const result = await fetch('/api/auth/logout',{
-            method:'GET'
-        });
-        return result;
-    }
-    logoutUser().then(async (data)=>{
-        const result = await data.json();
-        if (result.response === 'success') {
+    logoutUser().then((data : responseData)=>{
+        if (data.response === 'success') {
             dispatch(logout());
         }
     }).catch((err) => {
-        console.log(err.message);
+      console.log(`Error Logging Out: ${err.message}`);
     })
   },[dispatch]);
   return (

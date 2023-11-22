@@ -24,14 +24,17 @@ const addUser = async (username,email,password) => {
     let output;
     try {
         const db = connectDB();
+        console.error(`Test B`);
         const result = await db.query(`CALL registerUser('${username}','${email}','${password}')`);
         if (result?.error) {
+            console.error(`${new Date().toString()} - AddUser Procedure Failure: ${result.error}`);
             output = new AppError(500,"Registration Procedure Failed.");
         }
         else {
             output = true;
         }
     } catch(err) {
+        console.error(`${new Date().toString()} - AddUser: ${err.message}`);
         msg = err.message;
         output = new AppError(status,msg);
     }

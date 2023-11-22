@@ -10,10 +10,11 @@ export default defineConfig({
     setupFiles:'./tests/setup.js'
   },
   server:{
+    host:true,
     proxy:{
       "/api":{
         target:"http://localhost:5000",
-        secure:false,
+        secure:(process.env.NODE_ENV === 'production') ? true : false,
         changeOrigin:true,
         configure:(proxy)=>{
           proxy.on('error', (err)=>{
