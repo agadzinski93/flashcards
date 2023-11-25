@@ -1,38 +1,47 @@
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { logout } from "../../redux/slices/authSlice"
-import { Navigate } from "react-router-dom"
+import { useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { Navigate } from "react-router-dom";
+import { useLogoutUserMutation } from "../../redux/apis/authApi";
 
-type responseData = {
-  response : string,
-  message: string
+interface RTKApiResponse {
+  data: {
+    response: string;
+    message: string;
+    data?: {
+      token: string;
+    };
+  };
 }
 
 const Logout = () => {
   const dispatch = useDispatch();
+  const [logoutUser, { error }] = useLogoutUserMutation();
 
-  const logoutUser = async () => {
-      const result = await fetch('/api/auth/logout',{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
+  const handleLogoutUser = useCallback(async () => {
+    const res = await logoutUser(null);
+    let output = null;
+    if ((res as RTKApiResponse).data) {
+      output = (res as RTKApiResponse).data;
+    }
+    return output;
+  }, [logoutUser]);
+
+  useEffect(() => {
+    handleLogoutUser()
+      .then((data) => {
+        if (data?.response === "success") {
+          dispatch(logout());
+        } else if (error) {
+          throw Error("Error Logging Out");
         }
+      })
+      .catch((err) => {
+        console.log(`Error Logging Out: ${err.message}`);
       });
-      const data = await result.json();
-      return data;
-  }
-  useEffect(()=>{
-    logoutUser().then((data : responseData)=>{
-        if (data.response === 'success') {
-            dispatch(logout());
-        }
-    }).catch((err) => {
-      console.log(`Error Logging Out: ${err.message}`);
-    })
-  },[dispatch]);
-  return (
-    <Navigate to="/" replace={true} />
-  )
-}
+  }, [handleLogoutUser, dispatch, error]);
 
-export default Logout
+  return <Navigate to="/" replace={true} />;
+};
+
+export default Logout;

@@ -1,0 +1,17 @@
+.navSignedOut {
+    display:flex;
+    width:16rem;
+    height:var(--nav-height);
+}
+.navSignedOut a {
+    flex:50;
+    padding-top:calc(var(--nav-height) / 2 - 0.5rem);
+    text-decoration:none;
+    text-align:center;
+    font-size:1rem;
+    font-weight:bold;
+    text-transform: uppercase;
+}
+.navSignedOut a:any-link {
+    color:#FFF;
+}

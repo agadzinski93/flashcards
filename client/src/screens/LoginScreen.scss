@@ -1,0 +1,38 @@
+.loginRegisterForm {
+    width:20rem;
+    margin:5rem auto 0 auto;
+    padding:2rem;
+    background-color:#FFF;
+    border-radius:1rem;
+
+    h1 {
+        color:#000;
+        text-align:center;
+        text-transform:uppercase;
+        font-weight:bold;
+        font-size:1.5rem;
+    }
+    input {
+        display:block;
+        width:80%;
+        padding:0.5rem;
+        margin:1.5rem auto;
+        background-color:#FFF;
+        color:#585858;
+        border:none;
+        border-bottom:solid 1px #000;
+        text-align:center;
+    }
+    input::placeholder {
+        text-align:center;
+    }
+    button {
+        display:block;
+        width:6rem;
+        margin:1.5rem auto 0 auto;
+        padding:0.5rem;
+        border:none;
+        background-color:#009FBD;
+        color:#FFF;
+    }
+}

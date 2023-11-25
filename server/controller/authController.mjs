@@ -27,7 +27,7 @@ const loginUser = async (req,res) => {
                     httpOnly:true,
                     secure: (process.env.NODE_ENV === 'production') ? true : false,
                     maxAge: Math.floor(Date.now() / 1000) + (60 * 60),
-                    sameSite:'Lax',
+                    sameSite:'Strict',
                     signed:true
                 });
                 output = {response:'success',message:'Successfully Logged In',data:{token}};

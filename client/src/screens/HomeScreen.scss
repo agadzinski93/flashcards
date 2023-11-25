@@ -1,3 +1,7 @@
+body {
+    min-height:calc(100vh - var(--nav-height));
+    background-color:#3F58F1;
+}
 h1 {
     color:teal;
 }

@@ -1,11 +1,15 @@
-import { Outlet, Navigate } from "react-router-dom"
-import { useSelector } from "react-redux/es/hooks/useSelector"
+import { Outlet, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
-const PublicOnlyRoute = () => {
-    const auth = useSelector(state => state.auth);
-    return (
-      (!auth.token) ? <Outlet /> : <Navigate to="/dashboard" replace={true} />
-    )
+interface authObject {
+  auth: {
+    token: string | null;
+  };
 }
 
-export default PublicOnlyRoute
+const PublicOnlyRoute = () => {
+  const auth = useSelector((state: authObject) => state.auth);
+  return !auth.token ? <Outlet /> : <Navigate to="/dashboard" replace={true} />;
+};
+
+export default PublicOnlyRoute;

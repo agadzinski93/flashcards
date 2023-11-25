@@ -1,0 +1,26 @@
+.navSignedIn {
+    width:8rem;
+    height:var(--nav-height);
+}
+.navSignedIn > ul {
+    display:none;
+    background-color:#FFF;
+}
+.navSignedIn > p,
+.navSignedIn a {
+    padding:calc(var(--nav-height) / 2 - 0.5rem);
+    text-align:center;
+    font-size:1rem;
+    text-transform: uppercase;
+}
+.navSignedIn:hover > ul {
+    display:block;
+}
+.navSignedIn a {
+    text-decoration:none;
+    display:block;
+}
+.navSignedIn a:any-link {
+    color:#000;
+    font-weight:bold;
+}

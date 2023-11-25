@@ -1,0 +1,10 @@
+header {
+    display:flex;
+    justify-content:space-between;
+    width:100vw;
+    height:var(--nav-height);
+    div {
+        width:8rem;
+        height:var(--nav-height);
+    }
+}
