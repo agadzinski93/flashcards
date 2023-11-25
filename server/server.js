@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const path = require('path');
 const PORT = process.env.PORT || 5000;
-const pino = require('pino-http');
+const logger = require('pino-http');
 const cookieParser = require('cookie-parser');
 const COOKIE_SECRET = process.env.COOKIE_SECRET || 'secret'
 
@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser(COOKIE_SECRET));
-app.use(pino);
+app.use(logger());
 
 ;(async () => {
     try {
