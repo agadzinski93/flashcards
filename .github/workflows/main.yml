@@ -15,20 +15,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '16.x'
+          cache: 'npm'
 
       - name: Install Client Dependencies
         working-directory: './client'
         run: npm ci
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+
       - name: Run Vitest
-        working-directory: './client'
         run: npm test
+
+      
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: build
     steps:
       - name: Deploy to cPanel
         uses: pinkasey/cpanel-deploy-action@v1.1.2
