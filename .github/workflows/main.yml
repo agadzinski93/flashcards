@@ -20,13 +20,14 @@ jobs:
         working-directory: './client'
         run: npm ci
 
-      
+      - name: Build React Project
+        run: npm run build
   test:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Run Vitest
-        run: cd client && npm test
+        run: npm test
   deploy:
     runs-on: ubuntu-latest
     needs: test
