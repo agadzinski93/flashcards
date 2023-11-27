@@ -20,6 +20,17 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.20.x'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build React Project
+        run: npm run build
+      - name: Run Vitest
+        run: cd client && npm test
       - name: Deploy to cPanel
         id: deploy
         uses: pinkasey/cpanel-deploy-action@v1.1.2

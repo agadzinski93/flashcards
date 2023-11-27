@@ -3,21 +3,22 @@ import {
     usernameOrEmailExists,
     addUser} from '../utilities/helpers/userHelpers.mjs'
 import AppError from "../utilities/validators/AppError.mjs";
+import { ApiResponse } from '../utilities/ApiResponse.mjs';
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 const SALT_ROUNDS = 10;
 
 const loginUser = async (req,res) => {
     const {username,password} = req.body;
-    let output = {response:'error',message:'Database Error.'};
+    const output = new ApiResponse('error','Database Error.');
     let result = await getUser(username);
     if (!(result instanceof AppError)) {
         if (result === "error") {
-            output.message = "Username or email is incorrect.";
+            output.setMessage = "Username or email is incorrect.";
         }
         else {
             if (!(await bcrypt.compare(password,result.password))) {
-                output.message = "Username or email is incorrect.";
+                output.setMessage = "Username or email is incorrect.";
             }
             else {
                 const {email} = result;
@@ -30,29 +31,30 @@ const loginUser = async (req,res) => {
                     sameSite:'Strict',
                     signed:true
                 });
-                output = {response:'success',message:'Successfully Logged In',data:{token}};
+                output.setApiResponse('success','Successfully Logged In',{token});
             }
         }
     }
-    res.json(output);
+    res.json(output.getApiReponse());
 }
 const logoutUser = (req,res) => {
+    const output = new ApiResponse('success','Logged Out User');
     res.clearCookie('token');
-    res.json({response:'success',message:'Logged Out User'});
+    res.json(output.getApiReponse());
 }
 const registerUser = async (req,res) => {
     const {username,email,password,confirmPassword} = req.body;
-    let output = {response:'error',message:'Database Error.'};
+    const output = new ApiResponse('error','Database Error.');
 
     if (password !== confirmPassword) {
-        output = {response:'error',message:'Passwords do not match.'};
+        output.setMessage = 'Passwords do not match.';
     }
     else {
         let result = await usernameOrEmailExists(username,email);
         
         if (!(result instanceof AppError)) {
             if (result === 1) {
-                output = {response:'error',message:'Username or email already exists.'};
+                output.setMessage = 'Username or email already exists.';
             }
             else {
                 const salt = bcrypt.genSaltSync(SALT_ROUNDS);
@@ -69,15 +71,15 @@ const registerUser = async (req,res) => {
                         sameSite:'Lax',
                         signed:true
                     });
-                    output = {response:'success',message:'Successfully Registered User',data:{token}};
+                    output.setApiResponse('success','Successfully Registered User',{token});
                 }
                 else {
-                    output = {response:'error',message:result.message};
+                    output.setMessage = result.message;
                 }
             }
         }
     }
-    res.json(output);
+    res.json(output.getApiReponse());
 }
 
 export {loginUser,logoutUser,registerUser};

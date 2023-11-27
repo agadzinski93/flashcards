@@ -7,36 +7,25 @@ import { useLoginUserMutation } from "../redux/apis/authApi";
 
 import "./LoginScreen.scss";
 
-type Inputs = {
-  username: string;
-  password: string;
-};
-
-interface RTKApiResponse {
-  data: {
-    response: string;
-    message: string;
-    data?: {
-      token: string;
-    };
-  };
-}
+import type { LoginInputs } from "../shared/interfaces/FormInputs.interface";
+import type { RTKApiResponse } from "../shared/interfaces/RTKApiResponse.interface";
 
 const LoginScreen = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<LoginInputs>();
 
   const [loginError, setLoginError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginUser, { isLoading }] = useLoginUserMutation();
 
-  const handleSubmission = async (formData: Inputs) => {
+  const handleSubmission = async (formData: LoginInputs) => {
     const res = await loginUser(formData);
     const final = (res as RTKApiResponse).data;
+    setLoginError("");
 
     if (final.response === "error") {
       dispatch(logout());
@@ -49,10 +38,12 @@ const LoginScreen = () => {
   };
 
   const handleSubmissionError = () => {
-    console.log("Something went wrong!");
+    setLoginError("You have errors on your form.");
   };
 
-  return !isLoading ? (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <form
       className="loginRegisterForm"
       onSubmit={handleSubmit(handleSubmission, handleSubmissionError)}
@@ -79,8 +70,6 @@ const LoginScreen = () => {
 
       <button type="submit">Sign In</button>
     </form>
-  ) : (
-    <p>Loading...</p>
   );
 };
 

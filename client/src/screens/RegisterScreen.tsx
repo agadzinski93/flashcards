@@ -7,12 +7,8 @@ import { useRegisterUserMutation } from "../redux/apis/authApi";
 
 import "./LoginScreen.scss";
 
-type Inputs = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+import type { RegisterInputs } from "../shared/interfaces/FormInputs.interface";
+import type { RTKApiResponse } from "../shared/interfaces/RTKApiResponse.interface";
 
 const RegisterScreen = () => {
   const {
@@ -21,17 +17,7 @@ const RegisterScreen = () => {
     getValues,
     formState: { errors },
     setError,
-  } = useForm<Inputs>();
-
-  interface RTKApiResponse {
-    data: {
-      response: string;
-      message: string;
-      data?: {
-        token: string;
-      };
-    };
-  }
+  } = useForm<RegisterInputs>();
 
   const [passError, setPassError] = useState(false);
   const [exists, setUserExists] = useState(false);
@@ -39,7 +25,7 @@ const RegisterScreen = () => {
   const navigate = useNavigate();
   const [registerUser, { isLoading }] = useRegisterUserMutation();
 
-  const handleSubmission = async (data: Inputs) => {
+  const handleSubmission = async (data: RegisterInputs) => {
     const passwordInputs = getValues(["password", "confirmPassword"]);
     if (passwordInputs[0] === passwordInputs[1]) {
       setPassError(false);
@@ -60,11 +46,11 @@ const RegisterScreen = () => {
     }
   };
 
-  const handleSubmissionError = () => {
-    console.log("Something went wrong!");
-  };
+  const handleSubmissionError = () => {};
 
-  return !isLoading ? (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <form
       className="loginRegisterForm"
       onSubmit={handleSubmit(handleSubmission, handleSubmissionError)}
@@ -140,8 +126,6 @@ const RegisterScreen = () => {
 
       <button type="submit">Register</button>
     </form>
-  ) : (
-    <p>Loading...</p>
   );
 };
 
