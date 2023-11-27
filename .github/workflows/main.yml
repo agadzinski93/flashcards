@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Client Dependencies
         working-directory: './client'
-        run: cd client && npm ci
+        run: npm ci
 
       
   test:
