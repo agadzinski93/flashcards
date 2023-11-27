@@ -19,9 +19,6 @@ jobs:
       - name: Install Client Dependencies
         working-directory: './client'
         run: npm ci
-
-      - name: Build React Project
-        run: npm run build
   test:
     runs-on: ubuntu-latest
     needs: build
