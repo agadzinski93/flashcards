@@ -16,18 +16,16 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: Install Client Dependencies
-        run: cd client && npm ci
-
-      - name: Build React Project
-        run: npm run build
+      
   test:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Run Vitest
         run: cd client && npm test
   deploy:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Deploy to cPanel
         uses: pinkasey/cpanel-deploy-action@v1.1.2
