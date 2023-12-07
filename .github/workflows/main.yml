@@ -9,7 +9,8 @@ jobs:
       matrix:
         os: [ubuntu]
         node-version: [16.x,18.x,20.x]
-    runs-on: $${{ matrix.os }}-latest
+    name: ${{ matrix.os }} - ${{ matrix.node-version }}
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
