@@ -31,8 +31,8 @@ jobs:
       - name: Deploy to cPanel
         uses: pinkasey/cpanel-deploy-action@v1.1.2
         with:
-          hostname: "${{ secrets.CPANEL_HOSTNAME }}"
-          repository_root: "${{ secrets.CPANEL_REPO_ROOT }}"
+          hostname: "https://rssd9243.webaccountserver.com"
+          repository_root: "/home/ovtainxn/repositories/flashcards"
           branch: main
           cpanel_username: "${{ secrets.CPANEL_USERNAME }}"
           cpanel_token: "${{ secrets.CPANEL_TOKEN }}"
