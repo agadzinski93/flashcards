@@ -34,5 +34,5 @@ jobs:
           hostname: "https://rssd9243.webaccountserver.com"
           repository_root: "/home/ovtainxn/repositories/flashcards"
           branch: main
-          cpanel_username: "CICD@programminghelp.org"
+          cpanel_username: "ovtainxn"
           cpanel_token: "${{ secrets.CPANEL_TOKEN }}"
