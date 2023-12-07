@@ -2,39 +2,36 @@ name: CI
 on:
   push:
     branches: ["main"]
-
   workflow_dispatch:
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu]
+        node-version: [16.x,18.x,20.x]
+    runs-on: $${{ matrix.os }}-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Use Node.js - ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
-          cache: 'npm'
-
+          node-version: ${{ matrix.node-version }}
       - name: Install Client Dependencies
         working-directory: './client'
         run: npm ci
-
       - name: Run Vitest
         working-directory: './client'
-        run: npm test
-
-      
+        run: npm test 
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
     steps:
       - name: Deploy to cPanel
         uses: pinkasey/cpanel-deploy-action@v1.1.2
         with:
-          hostname: "https://rssd9243.webaccountserver.com"
-          repository_root: "/home/ovtainxn/repositories/flashcards"
+          hostname: "${{ secrets.CPANEL_HOSTNAME }}"
+          repository_root: "${{ secrets.CPANEL_REPO_ROOT }}"
           branch: main
           cpanel_username: "${{ secrets.CPANEL_USERNAME }}"
           cpanel_token: "${{ secrets.CPANEL_TOKEN }}"

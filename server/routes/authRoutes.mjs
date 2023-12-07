@@ -7,4 +7,4 @@ router.post("/login",loginUser);
 router.post("/logout",logoutUser);
 router.post("/register",registerUser);
 
-export default router;
+export {router};

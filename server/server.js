@@ -5,28 +5,35 @@ const dotenv = require('dotenv');
 dotenv.config();
 const path = require('path');
 const PORT = process.env.PORT || 5000;
+const helmet = require('helmet');
 const logger = require('pino-http');
 const cookieParser = require('cookie-parser');
 const COOKIE_SECRET = process.env.COOKIE_SECRET || 'secret'
 
-const {getRoutes} = require('./routes/Routes');
+const {addRoutes} = require('./utilities/init');
 
 const app = express();
     
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser(COOKIE_SECRET));
-app.use(logger());
+
+//Web Content Policy and CORS
+app.use(helmet({
+    contentSecurityPolicy:{
+      useDefaults:true,
+      directives:{
+        imgSrc:["'self'"],
+        scriptSrc:["'self'"],
+      }
+    },
+}));
 
 ;(async () => {
     try {
-        const {connectDB,authRoutes} = await getRoutes();
-
-        let db = connectDB();
-        app.use("/api/auth", authRoutes)
-
+        await addRoutes(app);
     } catch(err) {
-        console.error(`${new Date().toString()} -> App Init Failure: ${err.message}`);
+        console.error(`${new Date().toString()} -> App Init Failure: ${err.stack}`);
         process.exit(1);
     }
 })();
