@@ -24,7 +24,7 @@ app.use(helmet({
       useDefaults:true,
       directives:{
         imgSrc:["'self'"],
-        scriptSrc:["'self'"],
+        scriptSrc:["'self'","unsafe-inline"],
       }
     },
 }));
