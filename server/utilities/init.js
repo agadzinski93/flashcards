@@ -22,7 +22,7 @@ const Routes =  {
               useDefaults:true,
               directives:{
                 imgSrc:["'self'"],
-                scriptSrc:["'self'","unsafe-inline"],
+                scriptSrc:["'self'","'unsafe-inline'"],
               }
             },
         }));
