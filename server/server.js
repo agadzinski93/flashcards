@@ -5,12 +5,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 const path = require('path');
 const PORT = process.env.PORT || 5000;
-const helmet = require('helmet');
 const logger = require('pino-http');
 const cookieParser = require('cookie-parser');
 const COOKIE_SECRET = process.env.COOKIE_SECRET || 'secret'
 
-const {addRoutes} = require('./utilities/init');
+const {addRoutes,addSecurityPolicy} = require('./utilities/init');
 
 const app = express();
     
@@ -19,15 +18,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser(COOKIE_SECRET));
 
 //Web Content Policy and CORS
-app.use(helmet({
-    contentSecurityPolicy:{
-      useDefaults:true,
-      directives:{
-        imgSrc:["'self'"],
-        scriptSrc:["'self'","unsafe-inline"],
-      }
-    },
-}));
+addSecurityPolicy(app);
 
 ;(async () => {
     try {

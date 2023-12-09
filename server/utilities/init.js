@@ -1,3 +1,5 @@
+const helmet = require('helmet');
+
 const Routes =  {
     addRoutes:async(app) => {
         try {
@@ -13,6 +15,17 @@ const Routes =  {
             console.error(`${new Date().toString()} -> Import Routes Failed: ${err.message}`);
         }
         return null;
+    },
+    addSecurityPolicy:(app) => {
+        app.use(helmet({
+            contentSecurityPolicy:{
+              useDefaults:true,
+              directives:{
+                imgSrc:["'self'"],
+                scriptSrc:["'self'","unsafe-inline"],
+              }
+            },
+        }));
     }
 }
     
